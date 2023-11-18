@@ -1,9 +1,9 @@
 package com.connectis.connectis.repository;
 
-import com.connectis.connectis.models.CountryEntity;
+import com.connectis.connectis.models.ProvinceEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ICountry extends JpaRepository<CountryEntity, Long> {
+public interface IProvinceRepository extends JpaRepository<ProvinceEntity, Long> {
 }
