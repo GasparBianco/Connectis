@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -35,6 +37,21 @@ public class CountryServicesTests {
     public void getCountryByExactName_invalidName_null(){
         assertNull(countryServices.getCountryByExactName("argentina"));
         assertNull(countryServices.getCountryByExactName("Argentine"));
+    }
+    @Test
+    public void getCountryByNameContaining_validName_listCountryEntity(){
+        CountryEntity addedCountry = new CountryEntity();
+        addedCountry.setName("Armenia");
+        countryServices.addCountry(addedCountry);
+        List<CountryEntity> countryList = countryServices.getCountryByNameContaining("ar");
+        assertNotNull(countryList);
+        assertEquals(2, countryList.size());
+        assertTrue(countryList.stream().anyMatch(country -> country.getName().equals("Argentina")));
+        assertTrue(countryList.stream().anyMatch(country -> country.getName().equals("Armenia")));
+    }
+    @Test
+    public void getCountryByNameContaining_invalidName_null(){
+        assertNull(countryServices.getCountryByNameContaining("xz"));
     }
     @Test
     public void getCountryById_invalidId_null(){
