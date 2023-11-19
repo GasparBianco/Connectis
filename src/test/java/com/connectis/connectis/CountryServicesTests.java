@@ -26,6 +26,12 @@ public class CountryServicesTests {
         assertEquals("Argentina", countryServices.getCountryById(1L).getName());
     }
     @Test
+    public void getCountryByExactName_ValidName_countryEntity(){
+        CountryEntity country = countryServices.getCountryByExactName("Argentina");
+        assertEquals("Argentina", country.getName());
+        assertEquals(1L, country.getId());
+    }
+    @Test
     public void getCountryById_invalidId_null(){
         assertNull(countryServices.getCountryById(5L));
     }
