@@ -10,7 +10,7 @@ public abstract class Region {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "id",nullable = false)
-    private Short id;
+    private Long id;
     @Column(name = "name",nullable = false)
     private String name;
 

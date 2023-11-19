@@ -18,4 +18,7 @@ public class CountryServices {
     public CountryEntity getCountryById(Long countryId){
         return iCountryRepository.findById(countryId).orElse(null);
     }
+    public CountryEntity getCountryByExactName(String name){
+        return iCountryRepository.findByName(name);
+    }
 }
