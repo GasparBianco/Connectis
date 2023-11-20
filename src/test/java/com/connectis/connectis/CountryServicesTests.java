@@ -16,7 +16,7 @@ public class CountryServicesTests {
     private CountryServices countryServices;
 
     @Test
-    public void addCountry_validName_countryEntity(){
+    public void addCountry_validCountry_countryEntity(){
         CountryEntity country = new CountryEntity();
         country.setName("Argentina");
         CountryEntity addedCountry = countryServices.addCountry(country);
@@ -54,7 +54,33 @@ public class CountryServicesTests {
         assertNull(countryServices.getCountryByNameContaining("xz"));
     }
     @Test
+    public void deleteById_validId_true(){
+        assertTrue(countryServices.deleteCountryById(1L));
+        assertNull(countryServices.getCountryById(1L));
+    }
+    @Test
+    public void deleteById_invalidId_false(){
+        assertFalse(countryServices.deleteCountryById(999L));
+    }
+    @Test
     public void getCountryById_invalidId_null(){
-        assertNull(countryServices.getCountryById(5L));
+        assertNull(countryServices.getCountryById(999L));
+    }
+    @Test
+    public void updateCountry_validId_CountryEntity(){
+        CountryEntity countryToUpdate = new CountryEntity();
+        countryToUpdate.setName("Brasil");
+        countryToUpdate = countryServices.addCountry(countryToUpdate);
+        countryToUpdate.setName("Chile");
+        CountryEntity updatedCountry = countryServices.updateCountry(countryToUpdate);
+        assertEquals(countryToUpdate.getId(), updatedCountry.getId());
+        assertEquals(countryToUpdate.getName(), updatedCountry.getName());
+    }
+    @Test
+    public void updateCountry_invalidId_null(){
+        CountryEntity country = new CountryEntity();
+        country.setName("Bolivia");
+        country.setId(5L);
+        assertNull(countryServices.updateCountry(country));
     }
 }

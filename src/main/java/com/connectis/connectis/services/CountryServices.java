@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -26,5 +27,22 @@ public class CountryServices {
     public List<CountryEntity> getCountryByNameContaining(String name){
         List<CountryEntity> countries = iCountryRepository.findByNameContainingIgnoreCase(name);
         return countries.isEmpty() ? null : countries;
+    }
+    public boolean deleteCountryById(Long id) {
+        Optional<CountryEntity> countryOptional = iCountryRepository.findById(id);
+        if (countryOptional.isPresent()) {
+            iCountryRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+    public CountryEntity updateCountry(CountryEntity country){
+        Optional<CountryEntity> OptionalCountryToUpdate = iCountryRepository.findById(country.getId());
+        if (OptionalCountryToUpdate.isPresent()) {
+            CountryEntity existingCountry = OptionalCountryToUpdate.get();
+            existingCountry.setName(country.getName());
+            return iCountryRepository.save(existingCountry);
+        }
+        return null;
     }
 }
