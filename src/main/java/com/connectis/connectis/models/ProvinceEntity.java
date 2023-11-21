@@ -1,21 +1,16 @@
 package com.connectis.connectis.models;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-
-import java.util.List;
+import lombok.*;
 
 @Entity(name = "province")
-@Getter
 @Setter
-public class ProvinceEntity extends Region{
+@Getter
+public class ProvinceEntity {
 
-    @ManyToOne
-    @JoinColumn(name = "country_id")
-    private CountryEntity countryEntity;
-
-    @OneToMany(mappedBy = "provinceEntity", cascade = CascadeType.ALL)
-    private List<CityEntity> cityEntityList;
-}
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    @Column(name = "id",nullable = false)
+    private Long id;
+    @Column(name = "name",nullable = false)
+    private String name;}
