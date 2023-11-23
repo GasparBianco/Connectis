@@ -4,6 +4,7 @@ import com.connectis.connectis.dto.ProvinceDto;
 import com.connectis.connectis.models.ProvinceEntity;
 import com.connectis.connectis.services.ProvinceService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,11 +12,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/country/")
-@RequiredArgsConstructor
+@RequestMapping("/api/province/")
 public class ProvinceController {
 
-    private final ProvinceService provinceService;
+    @Autowired
+    private ProvinceService provinceService;
 
     @PostMapping
     public ResponseEntity<ProvinceDto> addProvince(@RequestBody ProvinceDto provinceDto){
@@ -23,42 +24,30 @@ public class ProvinceController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProvinceEntity>> getAllProvinces(){
+    public ResponseEntity<List<ProvinceDto>> getAllProvinces(){
         return new ResponseEntity<>(provinceService.getAllProvinces(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProvinceEntity> getProvinceById(@PathVariable Long id) throws Exception {
-        return new ResponseEntity<>(provinceService.getCountryById(id), HttpStatus.OK);
+    public ResponseEntity<ProvinceDto> getProvinceById(@PathVariable Long id){
+        return new ResponseEntity<>(provinceService.getProvinceById(id), HttpStatus.OK);
     }
 
     @GetMapping("/exact/{name}")
-    public ResponseEntity<ProvinceEntity> getProvinceByExactName(@PathVariable String name){
-        ProvinceEntity country = provinceService.getCountryByExactName(name);
-        if (country != null) {
-            return new ResponseEntity<>(country, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<ProvinceDto> getProvinceByExactName(@PathVariable String name){
+        ProvinceDto provinceDto = provinceService.getProvinceByExactName(name);
+        return new ResponseEntity<>(provinceDto, HttpStatus.OK);
     }
 
     @GetMapping("/contains/{name}")
-    public ResponseEntity<List<ProvinceEntity>> getProvinceByContainingName(@PathVariable String name){
-        List<ProvinceEntity> province = provinceService.getCountryByNameContaining(name);
-        if (province != null) {
-            return new ResponseEntity<>(province, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<List<ProvinceDto>> getProvinceByContainingName(@PathVariable String name){
+        List<ProvinceDto> province = provinceService.getProvinceByNameContaining(name);
+        return new ResponseEntity<>(province, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<List<ProvinceEntity>> deleteProvinceById(@PathVariable Long id){
-        boolean province = provinceService.deleteCountryById(id);
-        if (province) {
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<Void> deleteProvinceById(@PathVariable Long id) {
+        provinceService.deleteProvinceById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

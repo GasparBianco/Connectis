@@ -12,5 +12,6 @@ public class ProvinceEntity {
     @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "id",nullable = false)
     private Long id;
+
     @Column(name = "name",nullable = false)
     private String name;}

@@ -9,5 +9,6 @@ import java.util.List;
 @Repository
 public interface ProvinceRepository extends JpaRepository<ProvinceEntity, Long> {
     ProvinceEntity findByName(String name);
+
     List<ProvinceEntity> findByNameContainingIgnoreCase(String name);
 }

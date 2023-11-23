@@ -23,4 +23,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return problemDetail;
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    ProblemDetail handleIllegalArgumentException(IllegalArgumentException throwable) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "Province's name can't be null or shorter than 3 characters");
+        problemDetail.setTitle("BAD_REQUEST");
+        return problemDetail;
+    }
 }

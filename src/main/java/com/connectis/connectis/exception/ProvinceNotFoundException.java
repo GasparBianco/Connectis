@@ -5,5 +5,4 @@ public class ProvinceNotFoundException extends RuntimeException {
     public ProvinceNotFoundException() {
         super();
     }
-
 }

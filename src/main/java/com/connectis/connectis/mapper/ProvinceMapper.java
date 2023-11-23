@@ -18,5 +18,4 @@ public class ProvinceMapper {
                 .name(provinceEntity.getName())
                 .build();
     }
-
 }
